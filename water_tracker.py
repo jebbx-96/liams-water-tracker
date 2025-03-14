@@ -1,11 +1,10 @@
 import streamlit as st
 import time
-import random
 
 # Initial stats
 WATER_GOAL = 8
 STAMINA_PER_CUP = 5
-DAYS_TO_FOREST = 7
+DAYS_TO_FOREST = 8
 
 if "water_count" not in st.session_state:
     st.session_state.water_count = 0
@@ -31,7 +30,7 @@ demon_image = "images/dehydration_demon.png"
 demon_sound = "https://www.myinstants.com/media/sounds/scary-sound.mp3"
 celebration_sound = "https://www.myinstants.com/media/sounds/tada.mp3"
 
-# Fun, weird, and unhinged messages for extra water intake
+# Ordered silly messages for extra water intake
 silly_messages = [
     "Oh, u so sexi 😘", 
     "Go piss girl! 💦", 
@@ -40,12 +39,12 @@ silly_messages = [
     "Your pee is now clearer than my future.", 
     "Drink more and you'll unlock the secret ending.", 
     "If hydration was a crime, you'd be in jail.", 
-    "Do you even have bones left or are you just liquid?",
+    "Do you even have bones left or are you just liquid?", 
     "Your organs are clapping like my cheeks when you take me from behind lol. A standing ovation for hydration!", 
     "I bet rainbows appear when you pee at this point.", 
     "Fiji water is calling you daddy.", 
     "You’ve transcended mortal thirst. Welcome to the Liquid Realm.", 
-    "The Pacific Ocean is quaking in its boots.", 
+    "The Pacific Ocean is quaking in its boots."
 ]
 
 # Motivational messages for quest progression
@@ -62,7 +61,9 @@ def log_water():
     
     if st.session_state.water_count > WATER_GOAL:
         st.session_state.overflow = True  # Trigger XP overflow event
-        st.success(random.choice(silly_messages))
+        extra_cups = st.session_state.water_count - WATER_GOAL
+        if extra_cups <= len(silly_messages):
+            st.success(silly_messages[extra_cups - 1])
     
     # Ensure final forest stage is always reached
     if st.session_state.day_count >= DAYS_TO_FOREST - 1:
