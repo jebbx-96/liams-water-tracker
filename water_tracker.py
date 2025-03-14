@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+import random
 
 # Initial stats
 WATER_GOAL = 8
@@ -11,6 +12,7 @@ if "water_count" not in st.session_state:
     st.session_state.xp = 0
     st.session_state.day_count = 0
     st.session_state.plant_stage = 0
+    st.session_state.overflow = False
 
 # 8 Plant growth stages (including Day 0 seed stage)
 plant_images = [
@@ -36,6 +38,9 @@ def log_water():
     st.session_state.water_count += 1
     st.session_state.xp += XP_PER_CUP
     
+    if st.session_state.water_count > WATER_GOAL:
+        st.session_state.overflow = True  # Trigger XP overflow event
+    
     if st.session_state.water_count == WATER_GOAL:
         # Update plant growth dynamically per day
         st.session_state.plant_stage = min(st.session_state.day_count + 1, len(plant_images) - 1)
@@ -52,6 +57,7 @@ def log_water():
 
 def reset_day():
     st.session_state.water_count = 0
+    st.session_state.overflow = False
     st.session_state.message = ""
     st.rerun()
 
@@ -69,7 +75,7 @@ col1, col2 = st.columns([2, 1])
 
 with col1:
     st.subheader(f"Water Intake: {st.session_state.water_count}/{WATER_GOAL} cups")
-    st.progress(st.session_state.water_count / WATER_GOAL)
+    st.progress(min(st.session_state.water_count / WATER_GOAL, 1.0))
     st.subheader(f"XP: {st.session_state.xp}")
     
     # Display motivation message
@@ -84,3 +90,8 @@ with col1:
 
 with col2:
     st.image(plant_images[st.session_state.plant_stage], caption="Your Growing Forest", use_container_width=True)
+
+# Overflow XP Celebration
+if st.session_state.overflow:
+    st.balloons()  # Fun visual effect when XP overflows
+    st.audio("https://www.myinstants.com/media/sounds/tada-fanfare-a.mp3")  # Celebration sound
