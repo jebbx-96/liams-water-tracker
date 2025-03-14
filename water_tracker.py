@@ -60,7 +60,7 @@ def get_motivation():
     elif st.session_state.water_count == 11:
         return "Your pee is now clearer than my future."
     elif st.session_state.water_count == 12:
-        return "Your organs are clapping like my cheeks when you take me from behind lol. A standing ovation for hydration!"
+        return "Your organs are clapping like my cheeks when you take me from behind lol."
     elif st.session_state.water_count == 13:
         return "Fiji water is calling you daddy."
     elif st.session_state.water_count == 14:
