@@ -12,8 +12,24 @@ if "water_count" not in st.session_state:
     st.session_state.day_count = 0
     st.session_state.plant_stage = 0
 
-# Plant growth stages
-plant_images = ["🌱", "🌿", "🌳"]
+# 7 Plant growth stages (updated with daily progression)
+plant_images = [
+    "images/stage1_sprout.png", 
+    "images/stage2_seedling.png", 
+    "images/stage3_young_plant.png", 
+    "images/stage4_flower_bush.png", 
+    "images/stage5_small_tree.png", 
+    "images/stage6_mini_forest.png", 
+    "images/stage7_full_forest.png"
+]
+
+# Motivational message at halfway point
+def get_motivation():
+    if st.session_state.water_count == 4:
+        return "Halfway there! You're doing great ❤️"
+    elif st.session_state.water_count == WATER_GOAL:
+        return "Good job, my love! 💖"
+    return ""
 
 def log_water():
     if st.session_state.water_count < WATER_GOAL:
@@ -21,13 +37,15 @@ def log_water():
         st.session_state.xp += XP_PER_CUP
         
         if st.session_state.water_count == WATER_GOAL:
-            st.session_state.plant_stage = min(st.session_state.plant_stage + 1, 2)  # Progress plant stage
+            # Update plant growth dynamically per day
+            st.session_state.plant_stage = min(st.session_state.day_count, len(plant_images) - 1)
             st.session_state.day_count += 1
-            st.session_state.message = "Good job, my love! 💖"
             
             if st.session_state.day_count == DAYS_TO_FOREST:
                 st.session_state.message = "🌳 You've grown a full forest! Resetting..."
                 reset_week()
+            else:
+                st.session_state.message = get_motivation()
     
         time.sleep(0.2)
         st.rerun()
@@ -43,21 +61,27 @@ def reset_week():
     st.session_state.plant_stage = 0
     reset_day()
 
-# Streamlit UI
-st.title("Liam's Water Tracker")
+# Streamlit UI - Enhanced Layout
+st.set_page_config(page_title="Liam's Water Tracker", layout="wide")
+st.title("🌊 Liam's Water Tracker 🌿")
 
-st.subheader(f"Water Intake: {st.session_state.water_count}/{WATER_GOAL} cups")
-st.progress(st.session_state.water_count / WATER_GOAL)
+col1, col2 = st.columns([2, 1])
 
-st.subheader(f"XP: {st.session_state.xp}")
+with col1:
+    st.subheader(f"Water Intake: {st.session_state.water_count}/{WATER_GOAL} cups")
+    st.progress(st.session_state.water_count / WATER_GOAL)
+    st.subheader(f"XP: {st.session_state.xp}")
+    
+    # Display motivation message
+    motivation = get_motivation()
+    if motivation:
+        st.success(motivation)
+    
+    if st.button("💧 Log Water"):
+        log_water()
+    if st.button("🔄 New Day"):
+        reset_day()
 
-st.markdown(f"## {plant_images[st.session_state.plant_stage]}")
+with col2:
+    st.image(plant_images[st.session_state.plant_stage], caption="Your Growing Forest", use_column_width=True)
 
-if "message" in st.session_state and st.session_state.message:
-    st.success(st.session_state.message)
-
-if st.button("💧 Log Water"):
-    log_water()
-
-if st.button("🔄 New Day"):
-    reset_day()
