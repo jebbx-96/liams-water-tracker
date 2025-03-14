@@ -78,6 +78,8 @@ def log_water():
     if st.session_state.water_count > WATER_GOAL:
         st.session_state.overflow = True  # Trigger XP overflow event
         extra_cups = st.session_state.water_count - WATER_GOAL
+    if extra_cups <= len(silly_messages):
+        st.balloons()
 
     
     # Ensure final forest stage is always reached
