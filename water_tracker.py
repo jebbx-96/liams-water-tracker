@@ -53,6 +53,22 @@ def get_motivation():
         return "Halfway there, warrior! You're gaining strength ❤️"
     elif st.session_state.water_count == WATER_GOAL:
         return "Your stamina is at full power! ⚡💖"
+    elif st.session_state.water_count == 9:
+        return "Oh, u so sexi 😘"
+    elif st.session_state.water_count == 10:
+        return "Go piss girl! 💦"
+    elif st.session_state.water_count == 11:
+        return "Your pee is now clearer than my future."
+    elif st.session_state.water_count == 12:
+        return "Your organs are clapping like my cheeks when you take me from behind lol. A standing ovation for hydration!"
+    elif st.session_state.water_count == 13:
+        return "Fiji water is calling you daddy."
+    elif st.session_state.water_count == 14:
+        return "I bet rainbows appear when you pee at this point."
+    elif st.session_state.water_count == 15:
+        return "Do you even have bones left or are you just liquid?"
+    elif st.session_state.water_count == 16:
+        return "The Pacific Ocean is quaking in its boots."
     return ""
 
 def log_water():
@@ -62,8 +78,7 @@ def log_water():
     if st.session_state.water_count > WATER_GOAL:
         st.session_state.overflow = True  # Trigger XP overflow event
         extra_cups = st.session_state.water_count - WATER_GOAL
-        if extra_cups <= len(silly_messages):
-            st.success(silly_messages[extra_cups - 1])
+
     
     # Ensure final forest stage is always reached
     if st.session_state.day_count >= DAYS_TO_FOREST - 1:
