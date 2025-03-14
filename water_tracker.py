@@ -5,7 +5,7 @@ import random
 # Initial stats
 WATER_GOAL = 8
 XP_PER_CUP = 5
-DAYS_TO_FOREST = 7
+DAYS_TO_FOREST = 8
 
 if "water_count" not in st.session_state:
     st.session_state.water_count = 0
