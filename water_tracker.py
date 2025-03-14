@@ -40,7 +40,7 @@ silly_messages = [
     "Drink more and you'll unlock the secret ending.", 
     "If hydration was a crime, you'd be in jail.", 
     "Do you even have bones left or are you just liquid?", 
-    "Your organs are clapping like my cheeks when you take me from behind lol. A standing ovation for hydration!", 
+    "Your organs are clapping like my cheeks when you take me from behind lol.", 
     "I bet rainbows appear when you pee at this point.", 
     "Fiji water is calling you daddy.", 
     "You’ve transcended mortal thirst. Welcome to the Liquid Realm.", 
