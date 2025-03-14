@@ -126,8 +126,3 @@ with col2:
         st.audio(demon_sound, start_time=0)
     else:
         st.image(plant_images[st.session_state.plant_stage], caption="🌳 Your Legendary Growth 🌳", use_container_width=True)
-
-# Overflow Stamina Celebration
-if st.session_state.overflow:
-    st.balloons()  # Fun visual effect when stamina overflows
-    st.audio(celebration_sound, start_time=0)  # Play sound for at least 5 seconds
